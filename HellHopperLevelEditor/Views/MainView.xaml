@@ -9,9 +9,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         
         <ContentControl Grid.Column="0" x:Name="LevelViewModel" />
-        <ContentControl Grid.Column="1" x:Name="LevelXmlViewModel" />
+        <ContentControl Grid.Column="1" x:Name="ToolbarViewModel" />
+        <ContentControl Grid.Column="2" x:Name="LevelXmlViewModel" />
     </Grid>
 </UserControl>

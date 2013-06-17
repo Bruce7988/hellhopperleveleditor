@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using HellHopperLevelEditor.Model;
 using HellHopperLevelEditor.Model.DataAccess;
+using HellHopperLevelEditor.Model.Util;
 
 namespace HellHopperLevelEditor.ViewModels
 {
@@ -15,10 +16,9 @@ namespace HellHopperLevelEditor.ViewModels
         public string LevelXml
         {
             get { return mLevelXml; }
-            private set
+            set
             {
-                mLevelXml = value;
-                NotifyOfPropertyChange(() => LevelXml);
+                SetLevelXml(value, true);
             }
         }
 
@@ -32,14 +32,32 @@ namespace HellHopperLevelEditor.ViewModels
             UpdateFromModel();
         }
 
-        private void UpdateFromModel()
+        private void SetLevelXml(string value, bool triggerUpdateModel)
         {
-            LevelXml = RiseSectionDataXmlWriter.Write(mRiseSectionData);
+            mLevelXml = value;
+            NotifyOfPropertyChange(() => LevelXml);
+            if (triggerUpdateModel)
+            {
+                UpdateModel();
+            }
         }
 
-        private void RiseSectionDataDataChanged(object sender, EventArgs e)
+        private void UpdateFromModel()
         {
-            UpdateFromModel();
+            SetLevelXml(RiseSectionDataXmlWriter.Write(mRiseSectionData), false);
+        }
+
+        private void UpdateModel()
+        {
+            mRiseSectionData.Update(RiseSectionUpdateSource.LevelXml);
+        }
+
+        private void RiseSectionDataDataChanged(object sender, ParameterizedEventArgs<RiseSectionUpdateSource> e)
+        {
+            if (e.Parameter != RiseSectionUpdateSource.LevelXml)
+            {
+                UpdateFromModel();
+            }
         }
     }
 }

@@ -11,19 +11,19 @@ namespace HellHopperLevelEditor.Code
     {
         public double X
         {
-            get { return mPlatformData.Offset * LevelConstants.OFFSET_WIDTH; }
+            get { return PlatformData.Offset * LevelConstants.OFFSET_WIDTH; }
         }
 
         public double Y
         {
-            get { return mPlatformData.Step * LevelConstants.STEP_HEIGHT; }
+            get { return PlatformData.Step * LevelConstants.STEP_HEIGHT; }
         }
 
-        private PlatformData mPlatformData;
+        public PlatformData PlatformData { get; private set; }
 
         public PlatformWrapper(PlatformData platformData)
         {
-            mPlatformData = platformData;
+            PlatformData = platformData;
         }
     }
 }

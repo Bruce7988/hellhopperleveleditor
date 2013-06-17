@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HellHopperLevelEditor.Model.Util;
 
 namespace HellHopperLevelEditor.Model
 {
@@ -10,15 +11,15 @@ namespace HellHopperLevelEditor.Model
     {
         public int StepRange { get; set; }
         public int Difficulty { get; set; }
-        public List<PlatformData> Platforms { get; private set; }
+        public List<PlatformData> Platforms { get; set; }
 
-        public event EventHandler DataChanged;
-        private void RaiseDataChangedEvent()
+        public event EventHandler<ParameterizedEventArgs<RiseSectionUpdateSource>> DataChanged;
+        private void RaiseDataChangedEvent(RiseSectionUpdateSource source)
         {
             var handler = DataChanged;
             if (handler != null)
             {
-                handler(this, EventArgs.Empty);
+                handler(this, new ParameterizedEventArgs<RiseSectionUpdateSource>(source));
             }
         }
 
@@ -29,11 +30,10 @@ namespace HellHopperLevelEditor.Model
             Platforms = new List<PlatformData>();
         }
 
-        public void Update()
+        public void Update(RiseSectionUpdateSource source)
         {
             Platforms = Platforms.OrderBy(pd => pd.Step).ToList();
-
-            RaiseDataChangedEvent();
+            RaiseDataChangedEvent(source);
         }
     }
 }

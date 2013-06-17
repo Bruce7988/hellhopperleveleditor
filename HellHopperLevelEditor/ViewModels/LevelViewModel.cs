@@ -7,6 +7,7 @@ using System.Windows;
 using Caliburn.Micro;
 using HellHopperLevelEditor.Code;
 using HellHopperLevelEditor.Model;
+using HellHopperLevelEditor.Model.Util;
 
 namespace HellHopperLevelEditor.ViewModels
 {
@@ -25,17 +26,6 @@ namespace HellHopperLevelEditor.ViewModels
                     NotifyOfPropertyChange(() => Height);
                     GenerateGridPoints();
                 }
-            }
-        }
-
-        private int mDifficulty;
-        public int Difficulty
-        {
-            get { return mDifficulty; }
-            set
-            {
-                mDifficulty = value;
-                NotifyOfPropertyChange(() => Difficulty);
             }
         }
 
@@ -76,8 +66,9 @@ namespace HellHopperLevelEditor.ViewModels
                 if (platform.X <= position.X && position.X <= platform.X + LevelConstants.PLATFORM_WIDTH &&
                     platform.Y <= position.Y && position.Y <= platform.Y + LevelConstants.PLATFORM_HEIGHT)
                 {
-                    mRiseSectionData.Platforms.RemoveAt(i);
-                    mRiseSectionData.Update();
+                    Platforms.RemoveAt(i);
+                    Platforms = new List<PlatformWrapper>(Platforms);
+                    UpdateModel();
                     return;
                 }
             }
@@ -90,8 +81,9 @@ namespace HellHopperLevelEditor.ViewModels
 
             if (CanPlacePlatform(stepFraction, step, offset))
             {
-                mRiseSectionData.Platforms.Add(new PlatformData(step, offset, "normal"));
-                mRiseSectionData.Update();
+                Platforms.Add(new PlatformWrapper(new PlatformData(step, offset, "normal")));
+                Platforms = new List<PlatformWrapper>(Platforms);
+                UpdateModel();
             }
         }
 
@@ -122,8 +114,13 @@ namespace HellHopperLevelEditor.ViewModels
         private void UpdateFromModel()
         {
             StepRange = mRiseSectionData.StepRange;
-            Difficulty = mRiseSectionData.Difficulty;
             Platforms = mRiseSectionData.Platforms.Select(pd => new PlatformWrapper(pd)).ToList();
+        }
+
+        private void UpdateModel()
+        {
+            mRiseSectionData.Platforms = Platforms.Select(pw => pw.PlatformData).ToList();
+            mRiseSectionData.Update(RiseSectionUpdateSource.Level);
         }
 
         private void GenerateGridPoints()
@@ -140,9 +137,12 @@ namespace HellHopperLevelEditor.ViewModels
             NotifyOfPropertyChange(() => GridPoints);
         }
 
-        private void RiseSectionDataDataChanged(object sender, EventArgs e)
+        private void RiseSectionDataDataChanged(object sender, ParameterizedEventArgs<RiseSectionUpdateSource> e)
         {
-            UpdateFromModel();
+            if (e.Parameter != RiseSectionUpdateSource.Level)
+            {
+                UpdateFromModel();
+            }
         }
     }
 }

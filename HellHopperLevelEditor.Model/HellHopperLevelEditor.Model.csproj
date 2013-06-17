@@ -44,6 +44,8 @@
     <Compile Include="RiseSectionData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataAccess\RiseSectionDataXmlWriter.cs" />
+    <Compile Include="Util\ParameterizedEventArgs.cs" />
+    <Compile Include="Util\RiseSectionUpdateSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

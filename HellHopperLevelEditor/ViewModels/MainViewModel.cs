@@ -11,6 +11,7 @@ namespace HellHopperLevelEditor.ViewModels
     public sealed class MainViewModel : PropertyChangedBase
     {
         public LevelViewModel LevelViewModel { get; private set; }
+        public ToolbarViewModel ToolbarViewModel { get; private set; }
         public LevelXmlViewModel LevelXmlViewModel { get; private set; }
 
         public MainViewModel()
@@ -18,6 +19,7 @@ namespace HellHopperLevelEditor.ViewModels
             RiseSectionData riseSectionData = new RiseSectionData();
 
             LevelViewModel = new LevelViewModel(riseSectionData);
+            ToolbarViewModel = new ToolbarViewModel(riseSectionData);
             LevelXmlViewModel = new LevelXmlViewModel(riseSectionData);
         }
     }
