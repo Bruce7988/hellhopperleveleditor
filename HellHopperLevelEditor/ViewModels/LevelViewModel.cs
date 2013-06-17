@@ -59,9 +59,11 @@ namespace HellHopperLevelEditor.ViewModels
 
         private RiseSectionData mRiseSectionData;
 
-        public LevelViewModel()
+        public LevelViewModel(RiseSectionData riseSectionData)
         {
-            mRiseSectionData = new RiseSectionData();
+            mRiseSectionData = riseSectionData;
+            mRiseSectionData.DataChanged += RiseSectionDataDataChanged;
+
             UpdateFromModel();
         }
 
@@ -75,7 +77,7 @@ namespace HellHopperLevelEditor.ViewModels
                     platform.Y <= position.Y && position.Y <= platform.Y + LevelConstants.PLATFORM_HEIGHT)
                 {
                     mRiseSectionData.Platforms.RemoveAt(i);
-                    UpdateFromModel();
+                    mRiseSectionData.Update();
                     return;
                 }
             }
@@ -89,7 +91,7 @@ namespace HellHopperLevelEditor.ViewModels
             if (CanPlacePlatform(stepFraction, step, offset))
             {
                 mRiseSectionData.Platforms.Add(new PlatformData(step, offset, "normal"));
-                UpdateFromModel();
+                mRiseSectionData.Update();
             }
         }
 
@@ -136,6 +138,11 @@ namespace HellHopperLevelEditor.ViewModels
             }
 
             NotifyOfPropertyChange(() => GridPoints);
+        }
+
+        private void RiseSectionDataDataChanged(object sender, EventArgs e)
+        {
+            UpdateFromModel();
         }
     }
 }

@@ -60,9 +60,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppWindowManager.cs" />
     <Compile Include="Code\LevelConstants.cs" />
     <Compile Include="Code\PlatformWrapper.cs" />
     <Compile Include="ViewModels\LevelViewModel.cs" />
+    <Compile Include="ViewModels\LevelXmlViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\AppView.xaml.cs">
       <DependentUpon>AppView.xaml</DependentUpon>
@@ -75,6 +77,9 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Views\LevelView.xaml.cs">
       <DependentUpon>LevelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LevelXmlView.xaml.cs">
+      <DependentUpon>LevelXmlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -114,6 +119,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LevelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LevelXmlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
