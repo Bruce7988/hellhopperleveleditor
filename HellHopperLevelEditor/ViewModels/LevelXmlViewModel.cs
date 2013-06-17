@@ -49,6 +49,7 @@ namespace HellHopperLevelEditor.ViewModels
 
         private void UpdateModel()
         {
+            RiseSectionDataXmlReader.Read(mRiseSectionData, LevelXml);
             mRiseSectionData.Update(RiseSectionUpdateSource.LevelXml);
         }
 

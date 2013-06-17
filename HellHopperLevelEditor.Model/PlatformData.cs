@@ -11,12 +11,16 @@ namespace HellHopperLevelEditor.Model
         public int Step { get; set; }
         public int Offset { get; set; }
         public string Type { get; set; }
+        public string MovementXml { get; set; }
+        public string FeaturesXml { get; set; }
 
-        public PlatformData(int step, int offset, string type)
+        public PlatformData(int step, int offset, string type, string movementXml, string featuresXml)
         {
             Step = step;
             Offset = offset;
             Type = type;
+            MovementXml = movementXml;
+            FeaturesXml = featuresXml;
         }
     }
 }
