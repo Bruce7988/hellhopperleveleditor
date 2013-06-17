@@ -1,7 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HellHopperLevelEditor", "HellHopperLevelEditor\HellHopperLevelEditor.csproj", "{AA2BB295-124A-4D63-8C45-AB01B196BDAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HellHopperLevelEditor.Model", "HellHopperLevelEditor.Model\HellHopperLevelEditor.Model.csproj", "{6F6C61E6-7688-43DC-A23F-525F05A612AB}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA2BB295-124A-4D63-8C45-AB01B196BDAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA2BB295-124A-4D63-8C45-AB01B196BDAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA2BB295-124A-4D63-8C45-AB01B196BDAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA2BB295-124A-4D63-8C45-AB01B196BDAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F6C61E6-7688-43DC-A23F-525F05A612AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F6C61E6-7688-43DC-A23F-525F05A612AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F6C61E6-7688-43DC-A23F-525F05A612AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F6C61E6-7688-43DC-A23F-525F05A612AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

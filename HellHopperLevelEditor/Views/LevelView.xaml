@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="HellHopperLevelEditor.Views.LevelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:code="clr-namespace:HellHopperLevelEditor.Code"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Height="800">
+        <ScrollViewer>
+            <Grid Width="450">
+                <ItemsControl ItemsSource="{Binding Path=GridPoints}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas Background="White"
+                                    Height="{Binding Path=Height}"
+                                    cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown($mousepoint)]" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Stroke="Black" StrokeThickness="0.5"
+                                       Width="{x:Static code:LevelConstants.OFFSET_WIDTH}"
+                                       Height="{x:Static code:LevelConstants.STEP_GRID_HEIGHT}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
+                            <Setter Property="Canvas.Bottom" Value="{Binding Path=Y}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                </ItemsControl>
+
+                <ItemsControl ItemsSource="{Binding Path=Platforms}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas IsHitTestVisible="False" Height="{Binding Path=Height}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Stroke="Black" StrokeThickness="1" Fill="Red"
+                                       Width="{x:Static code:LevelConstants.PLATFORM_WIDTH}"
+                                       Height="{x:Static code:LevelConstants.PLATFORM_HEIGHT}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
+                            <Setter Property="Canvas.Bottom" Value="{Binding Path=Y}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
