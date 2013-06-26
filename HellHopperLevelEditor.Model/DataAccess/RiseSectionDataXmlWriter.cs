@@ -39,6 +39,12 @@ namespace HellHopperLevelEditor.Model.DataAccess
                 riseSectionElement.Add(enemiesElement);
             }
 
+            if (!string.IsNullOrEmpty(riseSectionData.ItemsXml))
+            {
+                XElement itemsElement = XElement.Parse(riseSectionData.ItemsXml);
+                riseSectionElement.Add(itemsElement);
+            }
+
             document.Add(riseSectionElement);
 
             return document;
@@ -46,11 +52,14 @@ namespace HellHopperLevelEditor.Model.DataAccess
 
         private static XElement GetPlatformDataXml(PlatformData platformData)
         {
-            XElement platformElement = new XElement(
-                RiseSectionDataXmlConstants.TAG_PLATFORM,
-                new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_STEP, platformData.Step),
-                new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_OFFSET, platformData.Offset),
-                new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_TYPE, platformData.Type));
+            XElement platformElement = new XElement(RiseSectionDataXmlConstants.TAG_PLATFORM);
+            if (platformData.Id >= 0)
+            {
+                platformElement.Add(new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_ID, platformData.Id));
+            }
+            platformElement.Add(new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_STEP, platformData.Step));
+            platformElement.Add(new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_OFFSET, platformData.Offset));
+            platformElement.Add(new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_TYPE, platformData.Type));
 
             if (!string.IsNullOrEmpty(platformData.MovementXml))
             {

@@ -14,9 +14,11 @@ namespace HellHopperLevelEditor.Model.DataAccess
         public const string TAG_MOVEMENT = "movement";
         public const string TAG_FEATURES = "features";
         public const string TAG_ENEMIES = "enemies";
+        public const string TAG_ITEMS = "items";
 
         public const string ATTRIBUTE_STEP_RANGE = "steprange";
         public const string ATTRIBUTE_DIFFICULTY = "difficulty";
+        public const string ATTRIBUTE_ID = "id";
         public const string ATTRIBUTE_STEP = "step";
         public const string ATTRIBUTE_OFFSET = "offset";
         public const string ATTRIBUTE_TYPE = "type";

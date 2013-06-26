@@ -14,6 +14,7 @@ namespace HellHopperLevelEditor.Model
         public List<PlatformData> Platforms { get; set; }
 
         public string EnemiesXml { get; set; }
+        public string ItemsXml { get; set; }
 
         public event EventHandler<ParameterizedEventArgs<RiseSectionUpdateSource>> DataChanged;
         private void RaiseDataChangedEvent(RiseSectionUpdateSource source)
@@ -31,6 +32,7 @@ namespace HellHopperLevelEditor.Model
             Difficulty = 0;
             Platforms = new List<PlatformData>();
             EnemiesXml = "";
+            ItemsXml = "";
         }
 
         public void Update(RiseSectionUpdateSource source)

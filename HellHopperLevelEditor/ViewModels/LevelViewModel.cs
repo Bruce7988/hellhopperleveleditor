@@ -81,7 +81,7 @@ namespace HellHopperLevelEditor.ViewModels
 
             if (CanPlacePlatform(stepFraction, step, offset))
             {
-                Platforms.Add(new PlatformWrapper(new PlatformData(step, offset, "normal", "", "")));
+                Platforms.Add(new PlatformWrapper(new PlatformData(-1, step, offset, "normal", "", "")));
                 Platforms = new List<PlatformWrapper>(Platforms);
                 UpdateModel();
             }

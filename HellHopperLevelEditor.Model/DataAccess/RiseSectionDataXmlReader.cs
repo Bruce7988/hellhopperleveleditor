@@ -42,14 +42,20 @@ namespace HellHopperLevelEditor.Model.DataAccess
             XElement enemiesElement = riseSectionElement.Element(RiseSectionDataXmlConstants.TAG_ENEMIES);
             string enemiesXml = enemiesElement != null ? enemiesElement.ToString() : "";
 
+            XElement itemsElement = riseSectionElement.Element(RiseSectionDataXmlConstants.TAG_ITEMS);
+            string itemsXml = itemsElement != null ? itemsElement.ToString() : "";
+
             riseSectionData.StepRange = stepRange;
             riseSectionData.Difficulty = difficulty;
             riseSectionData.Platforms = platforms;
             riseSectionData.EnemiesXml = enemiesXml;
+            riseSectionData.ItemsXml = itemsXml;
         }
 
         private static PlatformData GetPlatformData(XElement platformElement)
         {
+            XAttribute idAttribute = platformElement.Attribute(RiseSectionDataXmlConstants.ATTRIBUTE_ID);
+            int id = idAttribute != null ? int.Parse(idAttribute.Value) : -1;
             int step = int.Parse(platformElement.Attribute(RiseSectionDataXmlConstants.ATTRIBUTE_STEP).Value, NumberFormatInfo.InvariantInfo);
             int offset = int.Parse(platformElement.Attribute(RiseSectionDataXmlConstants.ATTRIBUTE_OFFSET).Value, NumberFormatInfo.InvariantInfo);
             string type = platformElement.Attribute(RiseSectionDataXmlConstants.ATTRIBUTE_TYPE).Value;
@@ -60,7 +66,7 @@ namespace HellHopperLevelEditor.Model.DataAccess
             XElement featuresElement = platformElement.Element(RiseSectionDataXmlConstants.TAG_FEATURES);
             string featuresXml = featuresElement != null ? featuresElement.ToString() : "";
 
-            PlatformData platformData = new PlatformData(step, offset, type, movementXml, featuresXml);
+            PlatformData platformData = new PlatformData(id, step, offset, type, movementXml, featuresXml);
 
             return platformData;
         }
