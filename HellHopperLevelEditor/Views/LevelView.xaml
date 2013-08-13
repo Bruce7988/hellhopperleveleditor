@@ -5,24 +5,32 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:code="clr-namespace:HellHopperLevelEditor.Code"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <BitmapImage x:Key="background-image" UriSource="pack://application:,,,/Resources/Graphics/background.png" />
+    </UserControl.Resources>
+
     <Grid Height="800">
+        <Rectangle Stretch="Fill" Fill="Orange" />
+        
+        <Image HorizontalAlignment="Left" Source="{StaticResource background-image}" />
+        
         <ScrollViewer>
-            <Grid Width="450">
+            <Grid Width="450" VerticalAlignment="Bottom">
                 <ItemsControl ItemsSource="{Binding Path=GridPoints}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas Background="White"
-                                    Height="{Binding Path=Height}"
+                            <Canvas Background="Transparent"
+                                    Height="{Binding Path=PixelHeight}"
                                     cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown($mousepoint)]" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Rectangle Stroke="Black" StrokeThickness="0.5"
-                                       Width="{x:Static code:LevelConstants.OFFSET_WIDTH}"
-                                       Height="{x:Static code:LevelConstants.STEP_GRID_HEIGHT}" />
+                                       Width="0"
+                                       Height="0" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemContainerStyle>
@@ -36,20 +44,21 @@
                 <ItemsControl ItemsSource="{Binding Path=Platforms}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas IsHitTestVisible="False" Height="{Binding Path=Height}" />
+                            <Canvas IsHitTestVisible="False" Height="{Binding Path=PixelHeight}" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Rectangle Stroke="Black" StrokeThickness="1" Fill="Red"
-                                       Width="{x:Static code:LevelConstants.PLATFORM_WIDTH}"
-                                       Height="{x:Static code:LevelConstants.PLATFORM_HEIGHT}" />
+                            <Image Source="{Binding Path=ImageSource}" />
+                            <!--<Rectangle Stroke="Black" StrokeThickness="1" Fill="Red"
+                                       Width="{Binding Path=PixelWidth}"
+                                       Height="{Binding Path=PixelHeight}" />-->
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemContainerStyle>
                         <Style>
-                            <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
-                            <Setter Property="Canvas.Bottom" Value="{Binding Path=Y}" />
+                            <Setter Property="Canvas.Left" Value="{Binding Path=PixelX}" />
+                            <Setter Property="Canvas.Bottom" Value="{Binding Path=PixelY}" />
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>

@@ -13,17 +13,17 @@ namespace HellHopperLevelEditor.ViewModels
 {
     public sealed class LevelViewModel : PropertyChangedBase
     {
-        private int mStepRange;
-        public int StepRange
+        private double mHeight;
+        public double Height
         {
-            get { return mStepRange; }
+            get { return mHeight; }
             set
             {
-                if (mStepRange != value)
+                if (mHeight != value)
                 {
-                    mStepRange = value;
-                    NotifyOfPropertyChange(() => StepRange);
+                    mHeight = value;
                     NotifyOfPropertyChange(() => Height);
+                    NotifyOfPropertyChange(() => PixelHeight);
                     GenerateGridPoints();
                 }
             }
@@ -40,9 +40,9 @@ namespace HellHopperLevelEditor.ViewModels
             }
         }
 
-        public double Height
+        public double PixelHeight
         {
-            get { return StepRange * LevelConstants.STEP_HEIGHT; }
+            get { return Height * LevelConstants.METER_TO_PIXEL; }
         }
 
         public List<Point> GridPoints { get; private set; }
@@ -59,62 +59,67 @@ namespace HellHopperLevelEditor.ViewModels
 
         public void MouseDown(Point position)
         {
-            position.Y = Height - position.Y;
-            for (int i = 0; i < Platforms.Count; i++)
-            {
-                PlatformWrapper platform = Platforms[i];
-                if (platform.X <= position.X && position.X <= platform.X + LevelConstants.PLATFORM_WIDTH &&
-                    platform.Y <= position.Y && position.Y <= platform.Y + LevelConstants.PLATFORM_HEIGHT)
-                {
-                    Platforms.RemoveAt(i);
-                    Platforms = new List<PlatformWrapper>(Platforms);
-                    UpdateModel();
-                    return;
-                }
-            }
+            //position.Y = PixelHeight - position.Y;
+            //for (int i = 0; i < Platforms.Count; i++)
+            //{
+            //    PlatformWrapper platform = Platforms[i];
+            //    if (platform.X <= position.X && position.X <= platform.X + LevelConstants.PLATFORM_WIDTH &&
+            //        platform.Y <= position.Y && position.Y <= platform.Y + LevelConstants.PLATFORM_HEIGHT)
+            //    {
+            //        Platforms.RemoveAt(i);
+            //        Platforms = new List<PlatformWrapper>(Platforms);
+            //        UpdateModel();
+            //        return;
+            //    }
+            //}
 
-            double stepFraction = position.Y / LevelConstants.STEP_HEIGHT;
-            double offsetFraction = position.X / LevelConstants.OFFSET_WIDTH;
+            //double stepFraction = position.Y / LevelConstants.STEP_HEIGHT;
+            //double offsetFraction = position.X / LevelConstants.OFFSET_WIDTH;
 
-            int step = (int)stepFraction;
-            int offset = (int)offsetFraction;
+            //int step = (int)stepFraction;
+            //int offset = (int)offsetFraction;
 
-            if (CanPlacePlatform(stepFraction, step, offset))
-            {
-                Platforms.Add(new PlatformWrapper(new PlatformData(-1, step, offset, "normal", "", "")));
-                Platforms = new List<PlatformWrapper>(Platforms);
-                UpdateModel();
-            }
+            //if (CanPlacePlatform(stepFraction, step, offset))
+            //{
+            //    Platforms.Add(new PlatformWrapper(new PlatformData(-1, step, offset, "normal", "", "")));
+            //    Platforms = new List<PlatformWrapper>(Platforms);
+            //    UpdateModel();
+            //}
         }
 
         private bool CanPlacePlatform(double stepFraction, int step, int offset)
         {
-            if (stepFraction % 1.0 <= 0.5 &&
-                0 <= step && step < StepRange &&
-                0 <= offset && offset <= LevelConstants.MAX_PLATFORM_OFFSET)
-            {
-                foreach (PlatformData platform in mRiseSectionData.Platforms)
-                {
-                    if (platform.Step == step &&
-                        offset > platform.Offset - LevelConstants.PLATFORM_WIDTH_OFFSETS &&
-                        offset < platform.Offset + LevelConstants.PLATFORM_WIDTH_OFFSETS)
-                    {
-                        return false;
-                    }
-                }
+            //if (stepFraction % 1.0 <= 0.5 &&
+            //    0 <= step && step < Height &&
+            //    0 <= offset && offset <= LevelConstants.MAX_PLATFORM_OFFSET)
+            //{
+            //    foreach (PlatformData platform in mRiseSectionData.Platforms)
+            //    {
+            //        if (platform.Step == step &&
+            //            offset > platform.Offset - LevelConstants.PLATFORM_WIDTH_OFFSETS &&
+            //            offset < platform.Offset + LevelConstants.PLATFORM_WIDTH_OFFSETS)
+            //        {
+            //            return false;
+            //        }
+            //    }
 
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+
+            return false;
         }
 
         private void UpdateFromModel()
         {
-            StepRange = mRiseSectionData.StepRange;
-            Platforms = mRiseSectionData.Platforms.Select(pd => new PlatformWrapper(pd)).ToList();
+            Height = mRiseSectionData.Height;
+            Platforms = mRiseSectionData.Platforms
+                .Where(pd => pd.Y < Height)
+                .Select(pd => new PlatformWrapper(pd))
+                .ToList();
         }
 
         private void UpdateModel()
@@ -125,14 +130,15 @@ namespace HellHopperLevelEditor.ViewModels
 
         private void GenerateGridPoints()
         {
-            GridPoints = new List<Point>();
-            for (int i = 0; i < StepRange; i++)
-            {
-                for (int j = 0; j < LevelConstants.LEVEL_WIDTH_OFFSETS; j++)
-                {
-                    GridPoints.Add(new Point(j * LevelConstants.OFFSET_WIDTH, i * LevelConstants.STEP_HEIGHT));
-                }
-            }
+            GridPoints = null;
+            //GridPoints = new List<Point>();
+            //for (int i = 0; i < Height; i++)
+            //{
+            //    for (int j = 0; j < LevelConstants.LEVEL_WIDTH_OFFSETS; j++)
+            //    {
+            //        GridPoints.Add(new Point(j * LevelConstants.OFFSET_WIDTH, i * LevelConstants.STEP_HEIGHT));
+            //    }
+            //}
 
             NotifyOfPropertyChange(() => GridPoints);
         }

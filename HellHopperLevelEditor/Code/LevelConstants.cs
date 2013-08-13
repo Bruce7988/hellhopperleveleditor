@@ -8,16 +8,10 @@ namespace HellHopperLevelEditor.Code
 {
     public static class LevelConstants
     {
-        public const double STEP_HEIGHT = 40.0;
-        public const double STEP_GRID_HEIGHT = STEP_HEIGHT / 2.0;
-        public const double OFFSET_WIDTH = 10.0;
+        public const double METER_TO_PIXEL = 40.0;
+        public const double PIXEL_TO_METER = 1.0 / METER_TO_PIXEL;
 
-        public const int PLATFORM_WIDTH_OFFSETS = 8;
-
-        public const double PLATFORM_WIDTH = PLATFORM_WIDTH_OFFSETS * OFFSET_WIDTH;
-        public const double PLATFORM_HEIGHT = 20.0;
-
-        public const int LEVEL_WIDTH_OFFSETS = 45;
-        public const int MAX_PLATFORM_OFFSET = LEVEL_WIDTH_OFFSETS - PLATFORM_WIDTH_OFFSETS;
+        public const double GAME_AREA_WIDTH = 11.25;
+        public const double GAME_AREA_HEIGHT = 20.0;
     }
 }

@@ -9,7 +9,7 @@ namespace HellHopperLevelEditor.Model
 {
     public sealed class RiseSectionData
     {
-        public int StepRange { get; set; }
+        public double Height { get; set; }
         public int Difficulty { get; set; }
         public List<PlatformData> Platforms { get; set; }
 
@@ -28,7 +28,7 @@ namespace HellHopperLevelEditor.Model
 
         public RiseSectionData()
         {
-            StepRange = 40;
+            Height = 40.0;
             Difficulty = 0;
             Platforms = new List<PlatformData>();
             EnemiesXml = "";
@@ -37,7 +37,7 @@ namespace HellHopperLevelEditor.Model
 
         public void Update(RiseSectionUpdateSource source)
         {
-            Platforms = Platforms.OrderBy(pd => pd.Step).ToList();
+            Platforms = Platforms.OrderBy(pd => pd.Y).ToList();
             RaiseDataChangedEvent(source);
         }
     }

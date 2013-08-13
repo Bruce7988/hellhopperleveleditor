@@ -21,11 +21,11 @@ namespace HellHopperLevelEditor.Model.DataAccess
                 new XDeclaration("1.0", "utf-8", "yes"));
 
             XElement riseSectionElement = new XElement(
-                RiseSectionDataXmlConstants.TAG_RISE_SECTION,
-                new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_STEP_RANGE, riseSectionData.StepRange),
-                new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_DIFFICULTY, riseSectionData.Difficulty));
+                "risesection",
+                new XAttribute("height", riseSectionData.Height),
+                new XAttribute("difficulty", riseSectionData.Difficulty));
 
-            XElement platformsElement = new XElement(RiseSectionDataXmlConstants.TAG_PLATFORMS);
+            XElement platformsElement = new XElement("platforms");
             foreach (PlatformData platformData in riseSectionData.Platforms)
             {
                 XElement platformElement = GetPlatformDataXml(platformData);
@@ -52,28 +52,82 @@ namespace HellHopperLevelEditor.Model.DataAccess
 
         private static XElement GetPlatformDataXml(PlatformData platformData)
         {
-            XElement platformElement = new XElement(RiseSectionDataXmlConstants.TAG_PLATFORM);
+            XElement platformElement = new XElement("platform");
             if (platformData.Id >= 0)
             {
-                platformElement.Add(new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_ID, platformData.Id));
+                platformElement.Add(new XAttribute("id", platformData.Id));
             }
-            platformElement.Add(new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_STEP, platformData.Step));
-            platformElement.Add(new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_OFFSET, platformData.Offset));
-            platformElement.Add(new XAttribute(RiseSectionDataXmlConstants.ATTRIBUTE_TYPE, platformData.Type));
+            platformElement.Add(new XAttribute("x", platformData.X));
+            platformElement.Add(new XAttribute("y", platformData.Y));
+            platformElement.Add(new XAttribute("type", platformData.Type));
 
-            if (!string.IsNullOrEmpty(platformData.MovementXml))
+            if (platformData.MovementData != null)
             {
-                XElement movementElement = XElement.Parse(platformData.MovementXml);
+                XElement movementElement = GetPlatformMovementDataXml(platformData.MovementData);
                 platformElement.Add(movementElement);
             }
 
-            if (!string.IsNullOrEmpty(platformData.FeaturesXml))
+            if (platformData.FeaturesData != null)
             {
-                XElement featuresElement = XElement.Parse(platformData.FeaturesXml);
+                XElement featuresElement = GetPlatformFeaturesDataXml(platformData.FeaturesData);
                 platformElement.Add(featuresElement);
             }
 
             return platformElement;
+        }
+
+        private static XElement GetPlatformMovementDataXml(PlatformMovementData movementData)
+        {
+            XElement movementElement = new XElement("movement");
+            movementElement.Add(DataAccessUtils.GetEnumAttribute("type", movementData.Type));
+
+            if (movementData.Properties != null) 
+            {
+                XElement propertiesElement = GetPropertiesDataXml(movementData.Properties);
+                movementElement.Add(propertiesElement);
+            }
+
+            return movementElement;
+        }
+
+        private static XElement GetPlatformFeaturesDataXml(List<PlatformFeatureData> featuresData)
+        {
+            XElement featuresElement = new XElement("features");
+            foreach (PlatformFeatureData featureData in featuresData)
+            {
+                XElement featureElement = GetPlatformFeatureDataXml(featureData);
+                featuresElement.Add(featureElement);
+            }
+
+            return featuresElement;
+        }
+
+        private static XElement GetPlatformFeatureDataXml(PlatformFeatureData featureData)
+        {
+            XElement featureElement = new XElement("movement");
+            featureElement.Add(DataAccessUtils.GetEnumAttribute("type", featureData.Type));
+
+            if (featureData.Properties != null)
+            {
+                XElement propertiesElement = GetPropertiesDataXml(featureData.Properties);
+                featureElement.Add(propertiesElement);
+            }
+
+            return featureElement;
+        }
+
+        private static XElement GetPropertiesDataXml(Dictionary<string, string> properties)
+        {
+            XElement propertiesElement = new XElement("properties");
+            foreach (KeyValuePair<string, string> property in properties)
+            {
+                XElement propertyElement = new XElement("property",
+                    new XAttribute("name", property.Key),
+                    new XAttribute("value", property.Value));
+                propertiesElement.Add(propertyElement);
+            }
+
+            return propertiesElement;
         }
     }
 }

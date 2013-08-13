@@ -26,12 +26,12 @@ namespace HellHopperLevelEditor.Model.DataAccess
 
         private static void GetRiseSectionData(RiseSectionData riseSectionData, XDocument document)
         {
-            XElement riseSectionElement = document.Element(RiseSectionDataXmlConstants.TAG_RISE_SECTION);
-            int stepRange = int.Parse(riseSectionElement.Attribute(RiseSectionDataXmlConstants.ATTRIBUTE_STEP_RANGE).Value, NumberFormatInfo.InvariantInfo);
-            int difficulty = int.Parse(riseSectionElement.Attribute(RiseSectionDataXmlConstants.ATTRIBUTE_DIFFICULTY).Value, NumberFormatInfo.InvariantInfo);
+            XElement riseSectionElement = document.Element("risesection");
+            double height = riseSectionElement.GetDouble("height");
+            int difficulty = riseSectionElement.GetInt("difficulty");
 
-            XElement platformsElement = riseSectionElement.Element(RiseSectionDataXmlConstants.TAG_PLATFORMS);
-            IEnumerable<XElement> platformElements = platformsElement.Elements(RiseSectionDataXmlConstants.TAG_PLATFORM);
+            XElement platformsElement = riseSectionElement.Element("platforms");
+            IEnumerable<XElement> platformElements = platformsElement.Elements("platform");
             List<PlatformData> platforms = new List<PlatformData>();
             foreach (XElement platformElement in platformElements)
             {
@@ -39,13 +39,13 @@ namespace HellHopperLevelEditor.Model.DataAccess
                 platforms.Add(platform);
             }
 
-            XElement enemiesElement = riseSectionElement.Element(RiseSectionDataXmlConstants.TAG_ENEMIES);
+            XElement enemiesElement = riseSectionElement.Element("enemies");
             string enemiesXml = enemiesElement != null ? enemiesElement.ToString() : "";
 
-            XElement itemsElement = riseSectionElement.Element(RiseSectionDataXmlConstants.TAG_ITEMS);
+            XElement itemsElement = riseSectionElement.Element("items");
             string itemsXml = itemsElement != null ? itemsElement.ToString() : "";
 
-            riseSectionData.StepRange = stepRange;
+            riseSectionData.Height = height;
             riseSectionData.Difficulty = difficulty;
             riseSectionData.Platforms = platforms;
             riseSectionData.EnemiesXml = enemiesXml;
@@ -54,21 +54,76 @@ namespace HellHopperLevelEditor.Model.DataAccess
 
         private static PlatformData GetPlatformData(XElement platformElement)
         {
-            XAttribute idAttribute = platformElement.Attribute(RiseSectionDataXmlConstants.ATTRIBUTE_ID);
-            int id = idAttribute != null ? int.Parse(idAttribute.Value) : -1;
-            int step = int.Parse(platformElement.Attribute(RiseSectionDataXmlConstants.ATTRIBUTE_STEP).Value, NumberFormatInfo.InvariantInfo);
-            int offset = int.Parse(platformElement.Attribute(RiseSectionDataXmlConstants.ATTRIBUTE_OFFSET).Value, NumberFormatInfo.InvariantInfo);
-            string type = platformElement.Attribute(RiseSectionDataXmlConstants.ATTRIBUTE_TYPE).Value;
+            int id = platformElement.GetInt("id", -1);
+            double x = platformElement.GetDouble("x");
+            double y = platformElement.GetDouble("y");
+            PlatformType type = platformElement.GetEnum<PlatformType>("type");
 
-            XElement movementElement = platformElement.Element(RiseSectionDataXmlConstants.TAG_MOVEMENT);
-            string movementXml = movementElement != null ? movementElement.ToString() : "";
+            XElement movementElement = platformElement.Element("movement");
+            PlatformMovementData movementData = GetPlatformMovementData(movementElement);
 
-            XElement featuresElement = platformElement.Element(RiseSectionDataXmlConstants.TAG_FEATURES);
-            string featuresXml = featuresElement != null ? featuresElement.ToString() : "";
+            XElement featuresElement = platformElement.Element("features");
+            List<PlatformFeatureData> featuresData = GetPlatformFeaturesData(featuresElement);
 
-            PlatformData platformData = new PlatformData(id, step, offset, type, movementXml, featuresXml);
+            PlatformData platformData = new PlatformData(id, x, y, type, movementData, featuresData);
 
             return platformData;
+        }
+
+        private static PlatformMovementData GetPlatformMovementData(XElement movementElement)
+        {
+            if (movementElement == null)
+            {
+                return null;
+            }
+
+            PlatformMovementType type = movementElement.GetEnum<PlatformMovementType>("type");
+
+            XElement propertiesElement = movementElement.Element("properties");
+            Dictionary<string, string> properties = GetPropertiesData(propertiesElement);
+
+            return new PlatformMovementData(type, properties);
+        }
+
+        private static List<PlatformFeatureData> GetPlatformFeaturesData(XElement featuresElement)
+        {
+            if (featuresElement == null)
+            {
+                return null;
+            }
+
+            return featuresElement.Elements("feature")
+                .Select(el => GetPlatformFeatureData(el))
+                .ToList();
+        }
+
+        private static PlatformFeatureData GetPlatformFeatureData(XElement featureElement)
+        {
+            PlatformFeatureType type = featureElement.GetEnum<PlatformFeatureType>("type");
+
+            XElement propertiesElement = featureElement.Element("properties");
+
+            Dictionary<string, string> properties = null;
+            if (propertiesElement != null)
+            {
+                properties = GetPropertiesData(propertiesElement);
+            }
+
+            return new PlatformFeatureData(type, properties);
+        }
+
+        private static Dictionary<string, string> GetPropertiesData(XElement propertiesElement)
+        {
+            IEnumerable<XElement> propertyElements = propertiesElement.Elements("property");
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+            foreach (XElement propertyElement in propertyElements)
+            {
+                string name = propertyElement.GetString("name");
+                string value = propertyElement.GetString("value");
+                properties.Add(name, value);
+            }
+
+            return properties;
         }
     }
 }
