@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HellHopperLevelEditor.Model.Platforms;
 using HellHopperLevelEditor.Model.Util;
 
 namespace HellHopperLevelEditor.Model

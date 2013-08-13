@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HellHopperLevelEditor.Model
+namespace HellHopperLevelEditor.Model.Platforms
 {
     public sealed class PlatformMovementData
     {

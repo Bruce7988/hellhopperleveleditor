@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using HellHopperLevelEditor.Code;
+using HellHopperLevelEditor.Code.Editor;
 using HellHopperLevelEditor.Model;
+using HellHopperLevelEditor.Model.Platforms;
 using HellHopperLevelEditor.Model.Util;
+using HellHopperLevelEditor.Utility;
 
 namespace HellHopperLevelEditor.ViewModels
 {
@@ -49,7 +52,7 @@ namespace HellHopperLevelEditor.ViewModels
 
         private RiseSectionData mRiseSectionData;
 
-        public LevelViewModel(RiseSectionData riseSectionData)
+        public LevelViewModel(RiseSectionData riseSectionData, EditorManager editorManager)
         {
             mRiseSectionData = riseSectionData;
             mRiseSectionData.DataChanged += RiseSectionDataDataChanged;
@@ -57,60 +60,39 @@ namespace HellHopperLevelEditor.ViewModels
             UpdateFromModel();
         }
 
-        public void MouseDown(Point position)
+        public void MouseDown(Point pixelPosition)
         {
-            //position.Y = PixelHeight - position.Y;
-            //for (int i = 0; i < Platforms.Count; i++)
-            //{
-            //    PlatformWrapper platform = Platforms[i];
-            //    if (platform.X <= position.X && position.X <= platform.X + LevelConstants.PLATFORM_WIDTH &&
-            //        platform.Y <= position.Y && position.Y <= platform.Y + LevelConstants.PLATFORM_HEIGHT)
-            //    {
-            //        Platforms.RemoveAt(i);
-            //        Platforms = new List<PlatformWrapper>(Platforms);
-            //        UpdateModel();
-            //        return;
-            //    }
-            //}
+            pixelPosition.Y = PixelHeight - pixelPosition.Y;
+            for (int i = 0; i < Platforms.Count; i++)
+            {
+                PlatformWrapper platform = Platforms[i];
+                if (platform.IsHit(pixelPosition))
+                {
+                    Platforms.RemoveAt(i);
+                    Platforms = new List<PlatformWrapper>(Platforms);
+                    UpdateModel();
+                    return;
+                }
+            }
 
-            //double stepFraction = position.Y / LevelConstants.STEP_HEIGHT;
-            //double offsetFraction = position.X / LevelConstants.OFFSET_WIDTH;
+            Point position = GetGameAreaPosition(pixelPosition);
 
-            //int step = (int)stepFraction;
-            //int offset = (int)offsetFraction;
+            double x = Util.LimitDouble(position.X - PlatformWrapper.PLATFORM_WIDTH / 2.0f, 0.0f, PlatformWrapper.MAX_PLATFORM_X);
+            double y = Math.Max(position.Y - PlatformWrapper.PLATFORM_HEIGHT / 2.0f, 0.0f);
 
-            //if (CanPlacePlatform(stepFraction, step, offset))
-            //{
-            //    Platforms.Add(new PlatformWrapper(new PlatformData(-1, step, offset, "normal", "", "")));
-            //    Platforms = new List<PlatformWrapper>(Platforms);
-            //    UpdateModel();
-            //}
+            x = Math.Round(x, 2);
+            y = Math.Round(y, 2);
+
+            Platforms.Add(new PlatformWrapper(new PlatformData(-1, x, y, PlatformType.Normal, null, null)));
+            Platforms = new List<PlatformWrapper>(Platforms);
+            UpdateModel();
         }
 
-        private bool CanPlacePlatform(double stepFraction, int step, int offset)
+        private static Point GetGameAreaPosition(Point pixelPosition)
         {
-            //if (stepFraction % 1.0 <= 0.5 &&
-            //    0 <= step && step < Height &&
-            //    0 <= offset && offset <= LevelConstants.MAX_PLATFORM_OFFSET)
-            //{
-            //    foreach (PlatformData platform in mRiseSectionData.Platforms)
-            //    {
-            //        if (platform.Step == step &&
-            //            offset > platform.Offset - LevelConstants.PLATFORM_WIDTH_OFFSETS &&
-            //            offset < platform.Offset + LevelConstants.PLATFORM_WIDTH_OFFSETS)
-            //        {
-            //            return false;
-            //        }
-            //    }
-
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
-
-            return false;
+            return new Point(
+                pixelPosition.X * LevelConstants.PIXEL_TO_METER,
+                pixelPosition.Y * LevelConstants.PIXEL_TO_METER);
         }
 
         private void UpdateFromModel()

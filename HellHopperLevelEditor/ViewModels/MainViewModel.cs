@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using HellHopperLevelEditor.Code.Editor;
 using HellHopperLevelEditor.Model;
 
 namespace HellHopperLevelEditor.ViewModels
@@ -18,8 +19,10 @@ namespace HellHopperLevelEditor.ViewModels
         {
             RiseSectionData riseSectionData = new RiseSectionData();
 
-            LevelViewModel = new LevelViewModel(riseSectionData);
-            ToolbarViewModel = new ToolbarViewModel(riseSectionData);
+            EditorManager editorManager = new EditorManager();
+
+            LevelViewModel = new LevelViewModel(riseSectionData, editorManager);
+            ToolbarViewModel = new ToolbarViewModel(riseSectionData, editorManager);
             LevelXmlViewModel = new LevelXmlViewModel(riseSectionData);
         }
     }

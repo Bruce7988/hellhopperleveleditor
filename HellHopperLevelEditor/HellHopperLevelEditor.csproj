@@ -79,8 +79,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppWindowManager.cs" />
+    <Compile Include="Code\Editor\EditorManager.cs" />
+    <Compile Include="Code\Editor\EditorMode.cs" />
+    <Compile Include="Code\Editor\EditorModeData.cs" />
+    <Compile Include="Code\GeneralConstants.cs" />
     <Compile Include="Code\LevelConstants.cs" />
     <Compile Include="Code\PlatformWrapper.cs" />
+    <Compile Include="ViewModels\EditorModeViewModel.cs" />
     <Compile Include="ViewModels\EditorViewModel.cs" />
     <Compile Include="ViewModels\LevelViewModel.cs" />
     <Compile Include="ViewModels\LevelXmlViewModel.cs" />
@@ -97,6 +102,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Views\EditorModeView.xaml.cs">
+      <DependentUpon>EditorModeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
@@ -155,6 +163,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EditorModeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,6 +205,10 @@
       <Project>{6f6c61e6-7688-43dc-a23f-525f05a612ab}</Project>
       <Name>HellHopperLevelEditor.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HellHopperLevelEditor.Utility\HellHopperLevelEditor.Utility.csproj">
+      <Project>{23113970-7c74-40e8-b866-6762b1f0cd65}</Project>
+      <Name>HellHopperLevelEditor.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Graphics\Platforms\crumbleplatform00.png" />
@@ -205,6 +221,27 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Graphics\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\EditorMode\enemycoolclerknormal.png" />
+    <Resource Include="Resources\EditorMode\enemyeviltwinnormal.png" />
+    <Resource Include="Resources\EditorMode\enemyimpnormal.png" />
+    <Resource Include="Resources\EditorMode\enemyknightnormal.png" />
+    <Resource Include="Resources\EditorMode\enemyloconormal.png" />
+    <Resource Include="Resources\EditorMode\enemysawnormal.png" />
+    <Resource Include="Resources\EditorMode\itembatcagenormal.png" />
+    <Resource Include="Resources\EditorMode\itembeansnormal.png" />
+    <Resource Include="Resources\EditorMode\itembloodglassnormal.png" />
+    <Resource Include="Resources\EditorMode\itemlifenormal.png" />
+    <Resource Include="Resources\EditorMode\itemshieldnormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\EditorMode\selectnormal.png" />
+    <Resource Include="Resources\EditorMode\selectover.png" />
+    <Resource Include="Resources\EditorMode\selectpressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\EditorMode\platformnormal.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

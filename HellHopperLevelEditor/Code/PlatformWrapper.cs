@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using HellHopperLevelEditor.Model;
+using HellHopperLevelEditor.Model.Platforms;
 
 namespace HellHopperLevelEditor.Code
 {
     public sealed class PlatformWrapper
     {
-        private const double PLATFORM_WIDTH = 2.0f;
-        private const double PLATFORM_HEIGHT = 0.5f;
+        public const double PLATFORM_WIDTH = 2.0f;
+        public const double PLATFORM_HEIGHT = 0.5f;
+
+        public const double MAX_PLATFORM_X = LevelConstants.GAME_AREA_WIDTH - PLATFORM_WIDTH;
 
         private const double PLATFORM_PIXEL_WIDTH = PLATFORM_WIDTH * LevelConstants.METER_TO_PIXEL;
         private const double PLATFORM_PIXEL_HEIGHT = PLATFORM_HEIGHT * LevelConstants.METER_TO_PIXEL;
 
-        private const string PLATFORM_RESOURCES_PATH = "pack://application:,,,/Resources/Graphics/Platforms/";
+        private const string PLATFORM_RESOURCES_PATH = GeneralConstants.RESOURCES_PATH + "Graphics/Platforms/";
         private const string NORMAL_PLATFORM_FORMAT = PLATFORM_RESOURCES_PATH + "normalplatform{0:00}.png";
         private const string CRUMBLE_PLATFORM_FORMAT = PLATFORM_RESOURCES_PATH + "crumbleplatform{0:00}.png";
 
@@ -70,6 +74,12 @@ namespace HellHopperLevelEditor.Code
             }
 
             return imageSource;
+        }
+
+        public bool IsHit(Point pixelPosition)
+        {
+            return PixelX <= pixelPosition.X && pixelPosition.X <= PixelX + PixelWidth &&
+                PixelY <= pixelPosition.Y && pixelPosition.Y <= PixelY + PixelHeight;
         }
     }
 }

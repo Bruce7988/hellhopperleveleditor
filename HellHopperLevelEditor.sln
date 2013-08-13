@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HellHopperLevelEditor", "He
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HellHopperLevelEditor.Model", "HellHopperLevelEditor.Model\HellHopperLevelEditor.Model.csproj", "{6F6C61E6-7688-43DC-A23F-525F05A612AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HellHopperLevelEditor.Utility", "HellHopperLevelEditor.Utility\HellHopperLevelEditor.Utility.csproj", "{23113970-7C74-40E8-B866-6762B1F0CD65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{6F6C61E6-7688-43DC-A23F-525F05A612AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F6C61E6-7688-43DC-A23F-525F05A612AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F6C61E6-7688-43DC-A23F-525F05A612AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23113970-7C74-40E8-B866-6762B1F0CD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23113970-7C74-40E8-B866-6762B1F0CD65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23113970-7C74-40E8-B866-6762B1F0CD65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23113970-7C74-40E8-B866-6762B1F0CD65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
