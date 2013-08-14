@@ -23,7 +23,8 @@
                         <ItemsPanelTemplate>
                             <Canvas Background="Transparent"
                                     Height="{Binding Path=PixelHeight}"
-                                    cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseDown($mousepoint)]" />
+                                    cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MouseLeftButtonDown($mousepoint)];
+                                    [Event MouseMove] = [Action MouseMove($mousepoint)]" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
@@ -49,16 +50,19 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding Path=ImageSource}" />
-                            <!--<Rectangle Stroke="Black" StrokeThickness="1" Fill="Red"
-                                       Width="{Binding Path=PixelWidth}"
-                                       Height="{Binding Path=PixelHeight}" />-->
+                            <Grid>
+                                <Image Source="{Binding Path=ImageSource}" Margin="{Binding Path=Margin}" />
+                                <Rectangle Stroke="Red" StrokeThickness="2" 
+                                           Visibility="{Binding Path= SelectionVisibility}"
+                                           Width="{Binding Path=MarginAdjustedPixelWidth}"
+                                           Height="{Binding Path=MarginAdjustedPixelHeight}" />
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemContainerStyle>
                         <Style>
-                            <Setter Property="Canvas.Left" Value="{Binding Path=PixelX}" />
-                            <Setter Property="Canvas.Bottom" Value="{Binding Path=PixelY}" />
+                            <Setter Property="Canvas.Left" Value="{Binding Path=MarginAdjustedPixelX}" />
+                            <Setter Property="Canvas.Bottom" Value="{Binding Path=MarginAdjustedPixelY}" />
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>

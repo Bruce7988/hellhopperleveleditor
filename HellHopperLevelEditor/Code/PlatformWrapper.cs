@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Caliburn.Micro;
 using HellHopperLevelEditor.Model;
 using HellHopperLevelEditor.Model.Platforms;
 
 namespace HellHopperLevelEditor.Code
 {
-    public sealed class PlatformWrapper
+    public sealed class PlatformWrapper : PropertyChangedBase
     {
         public const double PLATFORM_WIDTH = 2.0f;
         public const double PLATFORM_HEIGHT = 0.5f;
@@ -25,6 +26,8 @@ namespace HellHopperLevelEditor.Code
 
         private const int NUM_CRUMBLE_IMAGES = 2;
         private const int NUM_NORMAL_IMAGES = 5;
+
+        private const double MARGIN = 2.0;
 
         public double PixelX
         {
@@ -46,7 +49,67 @@ namespace HellHopperLevelEditor.Code
             get { return PLATFORM_PIXEL_HEIGHT; }
         }
 
+        public double MarginAdjustedPixelX
+        {
+            get { return PlatformData.X * LevelConstants.METER_TO_PIXEL - MARGIN; }
+        }
+
+        public double MarginAdjustedPixelY
+        {
+            get { return PlatformData.Y * LevelConstants.METER_TO_PIXEL - MARGIN; }
+        }
+
+        public double MarginAdjustedPixelWidth
+        {
+            get { return PLATFORM_PIXEL_WIDTH + MARGIN * 2.0; }
+        }
+
+        public double MarginAdjustedPixelHeight
+        {
+            get { return PLATFORM_PIXEL_HEIGHT + MARGIN * 2.0; }
+        }
+
+        public double Margin
+        {
+            get { return MARGIN; }
+        }
+
         public string ImageSource { get; private set; }
+
+        private bool mIsOver;
+        public bool IsOver
+        {
+            get { return mIsOver; }
+            set
+            {
+                if (mIsOver != value)
+                {
+                    mIsOver = value;
+                    NotifyOfPropertyChange(() => IsOver);
+                    NotifyOfPropertyChange(() => SelectionVisibility);
+                }
+            }
+        }
+
+        private bool mIsSelected;
+        public bool IsSelected
+        {
+            get { return mIsSelected; }
+            set
+            {
+                if (mIsSelected != value)
+                {
+                    mIsSelected = value;
+                    NotifyOfPropertyChange(() => IsSelected);
+                    NotifyOfPropertyChange(() => SelectionVisibility);
+                }
+            }
+        }
+
+        public Visibility SelectionVisibility
+        {
+            get { return (IsOver || IsSelected) ? Visibility.Visible : Visibility.Hidden; }
+        }
 
         public PlatformData PlatformData { get; private set; }
 

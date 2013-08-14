@@ -25,6 +25,10 @@ namespace HellHopperLevelEditor.ViewModels
 
             foreach (var editorMode in EditorModes)
             {
+                if (editorMode.EditorMode == mEditorManager.EditorMode)
+                {
+                    editorMode.IsActive = true;
+                }
                 editorMode.PropertyChanged += EditorModePropertyChanged;
             }
 
