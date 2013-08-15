@@ -23,6 +23,20 @@ namespace HellHopperLevelEditor.Code.Editor
             }
         }
 
+        private PlatformWrapper mSelectedPlatform;
+        public PlatformWrapper SelectedPlatform
+        {
+            get { return mSelectedPlatform; }
+            set
+            {
+                if (mSelectedPlatform != value)
+                {
+                    mSelectedPlatform = value;
+                    NotifyOfPropertyChange(() => SelectedPlatform);
+                }
+            }
+        }
+
         public EditorManager()
         {
             EditorMode = EditorMode.Select;

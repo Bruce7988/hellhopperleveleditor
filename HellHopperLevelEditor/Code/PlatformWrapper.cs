@@ -144,5 +144,20 @@ namespace HellHopperLevelEditor.Code
             return PixelX <= pixelPosition.X && pixelPosition.X <= PixelX + PixelWidth &&
                 PixelY <= pixelPosition.Y && pixelPosition.Y <= PixelY + PixelHeight;
         }
+
+        public void Update()
+        {
+            NotifyOfPropertyChange(() => PixelX);
+            NotifyOfPropertyChange(() => PixelY);
+            NotifyOfPropertyChange(() => PixelWidth);
+            NotifyOfPropertyChange(() => PixelHeight);
+            NotifyOfPropertyChange(() => MarginAdjustedPixelX);
+            NotifyOfPropertyChange(() => MarginAdjustedPixelY);
+            NotifyOfPropertyChange(() => MarginAdjustedPixelWidth);
+            NotifyOfPropertyChange(() => MarginAdjustedPixelHeight);
+            NotifyOfPropertyChange(() => IsOver);
+            NotifyOfPropertyChange(() => IsSelected);
+            NotifyOfPropertyChange(() => IsSelectionVisible);
+        }
     }
 }

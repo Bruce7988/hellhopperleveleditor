@@ -27,7 +27,9 @@
                                     Height="{Binding Path=PixelHeight}"
                                     cal:Message.Attach="
                                     [Event MouseLeftButtonDown] = [Action MouseLeftButtonDown($mousepoint)];
-                                    [Event MouseMove] = [Action MouseMove($mousepoint)]" />
+                                    [Event MouseLeftButtonUp] = [Action MouseLeftButtonUp($mousepoint)];
+                                    [Event MouseMove] = [Action MouseMove($mousepoint)];
+                                    [Event MouseRightButtonDown] = [Action MouseRightButtonDown($mousepoint)];" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>

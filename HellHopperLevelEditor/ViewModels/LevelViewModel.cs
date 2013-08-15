@@ -56,6 +56,8 @@ namespace HellHopperLevelEditor.ViewModels
             get { return mEditorManager.EditorMode; }
         }
 
+        private bool mIsDragging;
+
         private RiseSectionData mRiseSectionData;
         private EditorManager mEditorManager;
 
@@ -77,37 +79,26 @@ namespace HellHopperLevelEditor.ViewModels
             if (EditorMode == EditorMode.Select)
             {
                 Platforms.Apply(p => p.IsSelected = false);
-                PlatformWrapper platform = Platforms.FirstOrDefault(p => p.IsHit(pixelPosition));
+                PlatformWrapper platform = GetPlatformAtPosition(pixelPosition);
                 if (platform != null)
                 {
                     platform.IsSelected = true;
+                    mEditorManager.SelectedPlatform = platform;
+                    mIsDragging = true;
+                }
+                else
+                {
+                    mEditorManager.SelectedPlatform = null;
                 }
             }
             else if (EditorMode == EditorMode.Platform)
             {
-                for (int i = 0; i < Platforms.Count; i++)
-                {
-                    PlatformWrapper platform = Platforms[i];
-                    if (platform.IsHit(pixelPosition))
-                    {
-                        Platforms.RemoveAt(i);
-                        UpdateModel();
-                        return;
-                    }
-                }
+                PlatformWrapper addedPlatform = new PlatformWrapper(new PlatformData(-1, 0.0, 0.0, PlatformType.Normal, null, null));
+                SetObjectPosition(addedPlatform, pixelPosition);
 
-                Point position = GetGameAreaPosition(pixelPosition);
-
-                double x = MathUtil.LimitDouble(position.X - PlatformWrapper.PLATFORM_WIDTH / 2.0f, 0.0f, PlatformWrapper.MAX_PLATFORM_X);
-                double y = Math.Max(position.Y - PlatformWrapper.PLATFORM_HEIGHT / 2.0f, 0.0f);
-
-                x = Math.Round(x, 2);
-                y = Math.Round(y, 2);
-
-                Platforms.Add(new PlatformWrapper(new PlatformData(-1, x, y, PlatformType.Normal, null, null)));
+                Platforms.Add(addedPlatform);
                 UpdateModel();
             }
-
         }
 
         public void MouseMove(Point pixelPosition)
@@ -120,11 +111,60 @@ namespace HellHopperLevelEditor.ViewModels
             pixelPosition.Y = PixelHeight - pixelPosition.Y;
 
             Platforms.Apply(p => p.IsOver = false);
-            PlatformWrapper platform = Platforms.FirstOrDefault(p => p.IsHit(pixelPosition));
+            PlatformWrapper platform = GetPlatformAtPosition(pixelPosition);
             if (platform != null)
             {
                 platform.IsOver = true;
             }
+
+            if (mIsDragging)
+            {
+                SetObjectPosition(mEditorManager.SelectedPlatform, pixelPosition);
+                UpdateModel();
+            }
+        }
+
+        public void MouseLeftButtonUp(Point pixelPosition)
+        {
+            mIsDragging = false;
+        }
+
+        public void MouseRightButtonDown(Point pixelPosition)
+        {
+            pixelPosition.Y = PixelHeight - pixelPosition.Y;
+
+            PlatformWrapper platform = GetPlatformAtPosition(pixelPosition);
+            if (platform != null)
+            {
+                Platforms.Remove(platform);
+                if (mEditorManager.SelectedPlatform == platform)
+                {
+                    mEditorManager.SelectedPlatform = null;
+                }
+
+                UpdateModel();
+            }
+        }
+
+        private PlatformWrapper GetPlatformAtPosition(Point pixelPosition)
+        {
+            return Platforms.FirstOrDefault(p => p.IsHit(pixelPosition));
+        }
+
+        private void SetObjectPosition(PlatformWrapper platform, Point pixelPosition)
+        {
+            Point position = GetGameAreaPosition(pixelPosition);
+
+            double x = MathUtil.LimitDouble(position.X - PlatformWrapper.PLATFORM_WIDTH / 2.0f, 0.0f, PlatformWrapper.MAX_PLATFORM_X);
+            double y = Math.Max(position.Y - PlatformWrapper.PLATFORM_HEIGHT / 2.0f, 0.0f);
+
+            x = Math.Round(x, 2);
+            y = Math.Round(y, 2);
+
+            platform.PlatformData.X = x;
+            platform.PlatformData.Y = y;
+
+            platform.Update();
         }
 
         private static Point GetGameAreaPosition(Point pixelPosition)
