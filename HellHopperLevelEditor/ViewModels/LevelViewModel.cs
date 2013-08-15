@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -32,8 +33,8 @@ namespace HellHopperLevelEditor.ViewModels
             }
         }
 
-        private List<PlatformWrapper> mPlatforms;
-        public List<PlatformWrapper> Platforms
+        private ObservableCollection<PlatformWrapper> mPlatforms;
+        public ObservableCollection<PlatformWrapper> Platforms
         {
             get { return mPlatforms; }
             private set
@@ -90,7 +91,6 @@ namespace HellHopperLevelEditor.ViewModels
                     if (platform.IsHit(pixelPosition))
                     {
                         Platforms.RemoveAt(i);
-                        Platforms = new List<PlatformWrapper>(Platforms);
                         UpdateModel();
                         return;
                     }
@@ -105,7 +105,6 @@ namespace HellHopperLevelEditor.ViewModels
                 y = Math.Round(y, 2);
 
                 Platforms.Add(new PlatformWrapper(new PlatformData(-1, x, y, PlatformType.Normal, null, null)));
-                Platforms = new List<PlatformWrapper>(Platforms);
                 UpdateModel();
             }
 
@@ -138,10 +137,11 @@ namespace HellHopperLevelEditor.ViewModels
         private void UpdateFromModel()
         {
             Height = mRiseSectionData.Height;
-            Platforms = mRiseSectionData.Platforms
+            IEnumerable<PlatformWrapper> platforms = mRiseSectionData.Platforms
                 .Where(pd => pd.Y < Height)
-                .Select(pd => new PlatformWrapper(pd))
-                .ToList();
+                .Select(pd => new PlatformWrapper(pd));
+
+            Platforms = new ObservableCollection<PlatformWrapper>(platforms);
         }
 
         private void UpdateModel()

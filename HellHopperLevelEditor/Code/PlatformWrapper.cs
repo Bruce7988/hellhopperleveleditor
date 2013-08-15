@@ -86,7 +86,7 @@ namespace HellHopperLevelEditor.Code
                 {
                     mIsOver = value;
                     NotifyOfPropertyChange(() => IsOver);
-                    NotifyOfPropertyChange(() => SelectionVisibility);
+                    NotifyOfPropertyChange(() => IsSelectionVisible);
                 }
             }
         }
@@ -101,14 +101,14 @@ namespace HellHopperLevelEditor.Code
                 {
                     mIsSelected = value;
                     NotifyOfPropertyChange(() => IsSelected);
-                    NotifyOfPropertyChange(() => SelectionVisibility);
+                    NotifyOfPropertyChange(() => IsSelectionVisible);
                 }
             }
         }
 
-        public Visibility SelectionVisibility
+        public bool IsSelectionVisible
         {
-            get { return (IsOver || IsSelected) ? Visibility.Visible : Visibility.Hidden; }
+            get { return IsOver || IsSelected; }
         }
 
         public PlatformData PlatformData { get; private set; }

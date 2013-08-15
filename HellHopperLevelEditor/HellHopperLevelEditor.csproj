@@ -103,6 +103,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Views\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Views\EditorModeView.xaml.cs">
       <DependentUpon>EditorModeView.xaml</DependentUpon>
     </Compile>
@@ -243,6 +244,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\EditorMode\platformnormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Code\Level\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
