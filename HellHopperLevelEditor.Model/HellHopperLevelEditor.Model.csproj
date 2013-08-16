@@ -43,7 +43,7 @@
     <Compile Include="Platforms\PlatformData.cs" />
     <Compile Include="Platforms\Features\PlatformFeatureBaseData.cs" />
     <Compile Include="Platforms\Features\PlatformFeatureType.cs" />
-    <Compile Include="Platforms\Movement\PlatformMovementData.cs" />
+    <Compile Include="Platforms\Movement\PlatformMovementBaseData.cs" />
     <Compile Include="Platforms\Movement\PlatformMovementType.cs" />
     <Compile Include="Platforms\PlatformType.cs" />
     <Compile Include="RiseSectionData.cs" />

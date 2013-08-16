@@ -86,12 +86,15 @@
     <Compile Include="Code\GeneralConstants.cs" />
     <Compile Include="Code\LevelConstants.cs" />
     <Compile Include="Code\PlatformWrapper.cs" />
+    <Compile Include="ViewModels\PlatformEditorViewModel.cs" />
+    <Compile Include="ViewModels\PlatformFeaturesEditorViewModel.cs" />
     <Compile Include="ViewModels\EditorModeViewModel.cs" />
     <Compile Include="ViewModels\EditorViewModel.cs" />
     <Compile Include="ViewModels\LevelViewModel.cs" />
     <Compile Include="ViewModels\LevelXmlViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NoSelectionPropertiesViewModel.cs" />
+    <Compile Include="ViewModels\PlatformMovementEditorViewModel.cs" />
     <Compile Include="ViewModels\RiseSectionPropertiesViewModel.cs" />
     <Compile Include="ViewModels\ToolbarViewModel.cs" />
     <Compile Include="Views\AppView.xaml.cs">
@@ -121,6 +124,15 @@
     </Compile>
     <Compile Include="Views\NoSelectionPropertiesView.xaml.cs">
       <DependentUpon>NoSelectionPropertiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlatformEditorView.xaml.cs">
+      <DependentUpon>PlatformEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlatformFeaturesEditorView.xaml.cs">
+      <DependentUpon>PlatformFeaturesEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlatformMovementEditorView.xaml.cs">
+      <DependentUpon>PlatformMovementEditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlatformPropertiesView.xaml.cs">
       <DependentUpon>PlatformPropertiesView.xaml</DependentUpon>
@@ -186,6 +198,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NoSelectionPropertiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlatformEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlatformFeaturesEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlatformMovementEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

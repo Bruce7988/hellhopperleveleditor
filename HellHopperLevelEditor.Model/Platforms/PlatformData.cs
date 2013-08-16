@@ -14,10 +14,10 @@ namespace HellHopperLevelEditor.Model.Platforms
         public double X { get; set; }
         public double Y { get; set; }
         public PlatformType Type { get; set; }
-        public PlatformMovementData MovementData { get; set; }
+        public PlatformMovementBaseData MovementData { get; set; }
         public List<PlatformFeatureBaseData> FeaturesData { get; set; }
 
-        public PlatformData(int id, double x, double y, PlatformType type, PlatformMovementData movementData, List<PlatformFeatureBaseData> featuresData)
+        public PlatformData(int id, double x, double y, PlatformType type, PlatformMovementBaseData movementData, List<PlatformFeatureBaseData> featuresData)
         {
             Id = id;
             X = x;

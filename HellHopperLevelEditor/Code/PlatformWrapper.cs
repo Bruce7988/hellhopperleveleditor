@@ -75,6 +75,16 @@ namespace HellHopperLevelEditor.Code
             get { return MARGIN; }
         }
 
+        public Point Center
+        {
+            get
+            {
+                return new Point(
+                    PixelX + PixelWidth / 2.0,
+                    PixelY + PixelHeight / 2.0);
+            }
+        }
+
         public string ImageSource { get; private set; }
 
         private bool mIsOver;

@@ -148,7 +148,21 @@ namespace HellHopperLevelEditor.ViewModels
 
         private PlatformWrapper GetPlatformAtPosition(Point pixelPosition)
         {
-            return Platforms.FirstOrDefault(p => p.IsHit(pixelPosition));
+            IEnumerable<PlatformWrapper> hitPlatforms = Platforms.Where(p => p.IsHit(pixelPosition));
+            if (hitPlatforms.Any())
+            {
+                return hitPlatforms.OrderBy(p =>
+                {
+                    Point center = p.Center;
+                    double distX = center.X - pixelPosition.X;
+                    double distY = center.Y - pixelPosition.Y;
+                    return distX * distX + distY * distY;
+                }).First();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private void SetObjectPosition(PlatformWrapper platform, Point pixelPosition)

@@ -63,7 +63,7 @@ namespace HellHopperLevelEditor.Model.DataAccess
             PlatformType type = platformElement.GetEnum<PlatformType>("type");
 
             XElement movementElement = platformElement.Element("movement");
-            PlatformMovementData movementData = GetPlatformMovementData(movementElement);
+            PlatformMovementBaseData movementData = GetPlatformMovementData(movementElement);
 
             XElement featuresElement = platformElement.Element("features");
             List<PlatformFeatureBaseData> featuresData = GetPlatformFeaturesData(featuresElement);
@@ -73,7 +73,7 @@ namespace HellHopperLevelEditor.Model.DataAccess
             return platformData;
         }
 
-        private static PlatformMovementData GetPlatformMovementData(XElement movementElement)
+        private static PlatformMovementBaseData GetPlatformMovementData(XElement movementElement)
         {
             if (movementElement == null)
             {
@@ -85,7 +85,7 @@ namespace HellHopperLevelEditor.Model.DataAccess
             XElement propertiesElement = movementElement.Element("properties");
             Dictionary<string, string> properties = GetPropertiesData(propertiesElement);
 
-            return new PlatformMovementData(type, properties);
+            return new PlatformMovementBaseData(type, properties);
         }
 
         private static List<PlatformFeatureBaseData> GetPlatformFeaturesData(XElement featuresElement)

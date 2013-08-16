@@ -79,7 +79,7 @@ namespace HellHopperLevelEditor.Model.DataAccess
             return platformElement;
         }
 
-        private static XElement GetPlatformMovementDataXml(PlatformMovementData movementData)
+        private static XElement GetPlatformMovementDataXml(PlatformMovementBaseData movementData)
         {
             XElement movementElement = new XElement("movement");
             movementElement.Add(DataAccessUtils.GetEnumAttribute("type", movementData.Type));

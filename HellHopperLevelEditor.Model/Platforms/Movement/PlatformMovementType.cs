@@ -8,6 +8,7 @@ namespace HellHopperLevelEditor.Model.Platforms.Movement
 {
     public enum PlatformMovementType
     {
+        None,
         Horizontal,
         Vertical,
         Circular,

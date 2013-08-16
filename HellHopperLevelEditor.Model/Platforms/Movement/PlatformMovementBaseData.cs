@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace HellHopperLevelEditor.Model.Platforms.Movement
 {
-    public sealed class PlatformMovementData
+    public sealed class PlatformMovementBaseData
     {
         public PlatformMovementType Type { get; set; }
         public Dictionary<string, string> Properties { get; set; }
 
-        public PlatformMovementData(PlatformMovementType type, Dictionary<string, string> properties)
+        public PlatformMovementBaseData(PlatformMovementType type, Dictionary<string, string> properties)
         {
             Type = type;
             Properties = properties;
