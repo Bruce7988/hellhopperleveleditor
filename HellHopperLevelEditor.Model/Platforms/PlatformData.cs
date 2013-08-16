@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HellHopperLevelEditor.Model.Platforms.Features;
+using HellHopperLevelEditor.Model.Platforms.Movement;
 
 namespace HellHopperLevelEditor.Model.Platforms
 {
@@ -13,9 +15,9 @@ namespace HellHopperLevelEditor.Model.Platforms
         public double Y { get; set; }
         public PlatformType Type { get; set; }
         public PlatformMovementData MovementData { get; set; }
-        public List<PlatformFeatureData> FeaturesData { get; set; }
+        public List<PlatformFeatureBaseData> FeaturesData { get; set; }
 
-        public PlatformData(int id, double x, double y, PlatformType type, PlatformMovementData movementData, List<PlatformFeatureData> featuresData)
+        public PlatformData(int id, double x, double y, PlatformType type, PlatformMovementData movementData, List<PlatformFeatureBaseData> featuresData)
         {
             Id = id;
             X = x;

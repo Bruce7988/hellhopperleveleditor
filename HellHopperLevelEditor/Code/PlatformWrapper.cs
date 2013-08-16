@@ -7,6 +7,7 @@ using System.Windows;
 using Caliburn.Micro;
 using HellHopperLevelEditor.Model;
 using HellHopperLevelEditor.Model.Platforms;
+using HellHopperLevelEditor.Model.Platforms.Features;
 
 namespace HellHopperLevelEditor.Code
 {
@@ -124,7 +125,7 @@ namespace HellHopperLevelEditor.Code
 
         private string GetImageSource()
         {
-            List<PlatformFeatureData> featuresData = PlatformData.FeaturesData;
+            List<PlatformFeatureBaseData> featuresData = PlatformData.FeaturesData;
 
             string imageSource;
             if (featuresData != null && featuresData.Any(fd => fd.Type == PlatformFeatureType.Crumble))

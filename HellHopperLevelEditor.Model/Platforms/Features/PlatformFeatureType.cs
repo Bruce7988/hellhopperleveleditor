@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HellHopperLevelEditor.Model.Platforms
+namespace HellHopperLevelEditor.Model.Platforms.Features
 {
     public enum PlatformFeatureType
     {

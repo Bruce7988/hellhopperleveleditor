@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HellHopperLevelEditor.Model.Platforms
+namespace HellHopperLevelEditor.Model.Platforms.Movement
 {
-    public sealed class PlatformFeatureData
+    public sealed class PlatformMovementData
     {
-        public PlatformFeatureType Type { get; set; }
+        public PlatformMovementType Type { get; set; }
         public Dictionary<string, string> Properties { get; set; }
 
-        public PlatformFeatureData(PlatformFeatureType type, Dictionary<string, string> properties)
+        public PlatformMovementData(PlatformMovementType type, Dictionary<string, string> properties)
         {
             Type = type;
             Properties = properties;

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using HellHopperLevelEditor.Model.Platforms;
+using HellHopperLevelEditor.Model.Platforms.Features;
+using HellHopperLevelEditor.Model.Platforms.Movement;
 
 namespace HellHopperLevelEditor.Model.DataAccess
 {
@@ -64,7 +66,7 @@ namespace HellHopperLevelEditor.Model.DataAccess
             PlatformMovementData movementData = GetPlatformMovementData(movementElement);
 
             XElement featuresElement = platformElement.Element("features");
-            List<PlatformFeatureData> featuresData = GetPlatformFeaturesData(featuresElement);
+            List<PlatformFeatureBaseData> featuresData = GetPlatformFeaturesData(featuresElement);
 
             PlatformData platformData = new PlatformData(id, x, y, type, movementData, featuresData);
 
@@ -86,7 +88,7 @@ namespace HellHopperLevelEditor.Model.DataAccess
             return new PlatformMovementData(type, properties);
         }
 
-        private static List<PlatformFeatureData> GetPlatformFeaturesData(XElement featuresElement)
+        private static List<PlatformFeatureBaseData> GetPlatformFeaturesData(XElement featuresElement)
         {
             if (featuresElement == null)
             {
@@ -98,7 +100,7 @@ namespace HellHopperLevelEditor.Model.DataAccess
                 .ToList();
         }
 
-        private static PlatformFeatureData GetPlatformFeatureData(XElement featureElement)
+        private static PlatformFeatureBaseData GetPlatformFeatureData(XElement featureElement)
         {
             PlatformFeatureType type = featureElement.GetEnum<PlatformFeatureType>("type");
 
@@ -110,7 +112,7 @@ namespace HellHopperLevelEditor.Model.DataAccess
                 properties = GetPropertiesData(propertiesElement);
             }
 
-            return new PlatformFeatureData(type, properties);
+            return new PlatformFeatureBaseData(type, properties);
         }
 
         private static Dictionary<string, string> GetPropertiesData(XElement propertiesElement)

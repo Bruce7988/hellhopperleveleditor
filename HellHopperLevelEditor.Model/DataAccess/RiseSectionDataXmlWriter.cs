@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using HellHopperLevelEditor.Model.Platforms;
+using HellHopperLevelEditor.Model.Platforms.Features;
+using HellHopperLevelEditor.Model.Platforms.Movement;
 
 namespace HellHopperLevelEditor.Model.DataAccess
 {
@@ -91,10 +93,10 @@ namespace HellHopperLevelEditor.Model.DataAccess
             return movementElement;
         }
 
-        private static XElement GetPlatformFeaturesDataXml(List<PlatformFeatureData> featuresData)
+        private static XElement GetPlatformFeaturesDataXml(List<PlatformFeatureBaseData> featuresData)
         {
             XElement featuresElement = new XElement("features");
-            foreach (PlatformFeatureData featureData in featuresData)
+            foreach (PlatformFeatureBaseData featureData in featuresData)
             {
                 XElement featureElement = GetPlatformFeatureDataXml(featureData);
                 featuresElement.Add(featureElement);
@@ -103,7 +105,7 @@ namespace HellHopperLevelEditor.Model.DataAccess
             return featuresElement;
         }
 
-        private static XElement GetPlatformFeatureDataXml(PlatformFeatureData featureData)
+        private static XElement GetPlatformFeatureDataXml(PlatformFeatureBaseData featureData)
         {
             XElement featureElement = new XElement("movement");
             featureElement.Add(DataAccessUtils.GetEnumAttribute("type", featureData.Type));
